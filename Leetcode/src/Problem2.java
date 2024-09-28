@@ -1,28 +1,34 @@
-class Solution {
+package Leetcode.src;
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
+public class Problem2 {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        ListNode dummy = new ListNode(0);
-        ListNode trav = dummy;
+        ListNode dummyHead = new ListNode(0);
+        ListNode current = dummyHead;
         int carry = 0;
 
-        while (l1 != null || l2 != null) {
-            int sum = carry;
-            if (l1 != null) {
-                sum += l1.val;
-                l1 = l1.next;
-            }
-            if (l2 != null) {
-                sum += l2.val;
-                l2 = l2.next;
-            }
-            trav.next = new ListNode(sum % 10);
-            trav = trav.next;
+        while (l1 != null || l2 != null || carry != 0) {
+            int val1 = (l1 != null) ? l1.val : 0;
+            int val2 = (l2 != null) ? l2.val : 0;
+
+            int sum = val1 + val2 + carry;
             carry = sum / 10;
+            int digit = sum % 10;
+
+            current.next = new ListNode(digit);
+            current = current.next;
+
+            if (l1 != null) l1 = l1.next;
+            if (l2 != null) l2 = l2.next;
         }
 
-        if (carry > 0) {
-            trav.next = new ListNode(carry);
-        }
-
-        return dummy.next;
+        return dummyHead.next;
     }
 }
